@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/lrivales/team-profile-generator#readme",
   "dependencies": {
-    "inquirer": "^8.2.0"
+    "inquirer": "^8.2.0",
+    "spectre.css": "^0.5.9"
   },
   "devDependencies": {
     "jest": "^27.3.1"
