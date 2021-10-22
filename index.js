@@ -1,3 +1,3 @@
-const Generator = require('./src/Generator');
+const generateSite = require('./src/app');
 
-new Generator().initialize();
+new generateSite();
