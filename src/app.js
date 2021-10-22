@@ -62,8 +62,11 @@ function createFile(content) {
     })
 }
 
-function copyFile() {
-
+function copyCssFile() {
+    fs.copyFile('./node_modules/spectre.css/dist/spectre.min.css', './dist/spectre.min.css', (err) => {
+        if (err) throw err;
+        console.log('CSS file copied.')
+    })
 }
 
 function generateSite() {
@@ -73,7 +76,8 @@ function generateSite() {
             return generateHtml(answers);
         })
         .then(html => {
-            return createFile(html);
+            createFile(html);
+            copyCssFile();
         })
         .catch(err => {
             console.log(err);
