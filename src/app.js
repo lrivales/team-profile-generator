@@ -3,9 +3,23 @@ const fs = require('fs');
 const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 const Manager = require('../lib/Manager');
+const generateHtml = require('./page-template')
 
 function promptUser() {
     return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'team',
+            message: 'What is the name of the team?',
+            validate: teamInput => {
+                if (teamInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a team name.')
+                    return false;
+                }
+            }
+        },
         {
             type: 'input',
             name: 'name',
@@ -14,7 +28,7 @@ function promptUser() {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log('Please enter your name.');
+                    console.log("Please enter the employee's name.");
                     return false;
                 }
             }
@@ -32,27 +46,10 @@ function promptUser() {
         {
             type: 'list',
             name: 'role',
-            message: 'What is your role?',
+            message: "What is the employee's role?",
             choices: ['Manager', 'Engineer', 'Intern', 'Employee']
         }
     ]);
-}
-
-function generateHtml(data) {
-    return `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-        </head>
-        <body>
-            ${data.name}
-        </body>
-        </html>
-    `
 }
 
 function createFile(content) {
@@ -72,7 +69,6 @@ function copyCssFile() {
 function generateSite() {
     promptUser()
         .then(answers => {
-            console.log(generateHtml(answers));
             return generateHtml(answers);
         })
         .then(html => {
