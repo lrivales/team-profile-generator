@@ -3,7 +3,7 @@ const fs = require('fs');
 const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 const Manager = require('../lib/Manager');
-const generateHtml = require('./page-template')
+const generateHtml = require('./page-template');
 
 function promptUser() {
     return inquirer.prompt([
@@ -52,6 +52,16 @@ function promptUser() {
     ]);
 }
 
+function promptManager() {
+    return inquirer.prompt ([
+        {
+            type: 'input',
+            name: 'phone',
+            message: 'What is the phone number?'
+        }
+    ])
+}
+
 function createFile(content) {
     fs.writeFile('./dist/index.html', content, (err) => {
         if (err) throw err;
@@ -69,6 +79,7 @@ function copyCssFile() {
 function generateSite() {
     promptUser()
         .then(answers => {
+            console.log(answers);
             return generateHtml(answers);
         })
         .then(html => {
