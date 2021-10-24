@@ -13,12 +13,12 @@ const promptRole = () => {
             message: "What type of employee would you like to add?",
             choices: ['Manager', 'Engineer', 'Intern']
         }
-    ]);
+    ])
 }
 
-const promptManager = () => {
-    if (!managerArr.managers) {
-        managerArr.managers = [];
+const promptManager = (managerArr) => {
+    if (!managerArr) {
+        managerArr = [];
     };
 
     return inquirer.prompt([
@@ -30,7 +30,7 @@ const promptManager = () => {
         {
             type: 'input',
             name: 'id',
-            message: "What is the manager's ID?"
+            message: "What is the manager's employee ID?"
         },
         {
             type: 'input',
@@ -45,9 +45,88 @@ const promptManager = () => {
     ])
     .then(managerInfo => {
         this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
-        managerArr.managers.push(this.manager);
-        console.log(managerArr.managers);
-    });
+        managerArr.push(this.manager);
+        console.log(this.manager);
+    })
+}
+
+const promptEngineer = engineerArr => {
+    if (!engineerArr) {
+        engineerArr = [];
+    };
+
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the engineer's name?",
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the engineer's employee ID?"
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the engineer's email address?"
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: "What is the engineer's GitHub user name?"
+        }
+    ])
+    .then(engineerInfo => {
+        this.engineer = new Engineer(engineerInfo.name, engineerInfo.id, engineerInfo.email, engineerInfo.github)
+        engineerArr.push(this.engineer);
+        console.log(this.engineer);
+    })
+}
+
+const promptIntern = internArr => {
+    if (!internArr) {
+        internArr = [];
+    };
+
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the intern's name?",
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the intern's employee ID?"
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the intern's email address?"
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: "What is the intern's school?"
+        }
+    ])
+    .then(internInfo => {
+        this.intern = new Intern(internInfo.name, internInfo.id, internInfo.email, internInfo.school)
+        internArr.push(this.intern);
+        console.log(this.intern);
+    })
+}
+
+const promptAddMore = () => {
+    return inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'confirmAddMore',
+            message: 'Would you like to enter another employee?',
+            default: 'false'
+        }
+    ])
 }
 
 function createFile(content) {
@@ -81,12 +160,15 @@ function copyCssFile() {
 
 function generateSite() {
     promptRole()
-        .then(role => {
-            console.log(role);
-            if (role === 'Manager') {
-                promptManager(manager => {
-                    console.log(manager);
-                })
+        .then(answer => {
+            if (answer.role === 'Manager') {
+                promptManager()
+            } 
+            else if (answer.role === 'Engineer') {
+                promptEngineer()
+            }
+            else if (answer.role === 'Intern') {
+                promptIntern()
             }
         })
 }
