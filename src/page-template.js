@@ -8,13 +8,13 @@ function generateHtml(data) {
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="spectre.min.css">
-            <title>${data.team}</title>
+            <title>My Team</title>
         </head>
 
         <body>
             <div class="hero bg-gray">
                 <div class="hero-body">
-                    <h1>${data.team}</h1>
+                    <h1>My Team</h1>
                 </div>
             </div>
 

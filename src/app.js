@@ -5,61 +5,49 @@ const Intern = require('../lib/Intern');
 const Manager = require('../lib/Manager');
 const generateHtml = require('./page-template');
 
-function promptUser() {
+const promptRole = () => {
     return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'team',
-            message: 'What is the name of the team?',
-            validate: teamInput => {
-                if (teamInput) {
-                    return true;
-                } else {
-                    console.log('Please enter a team name.')
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'name',
-            message: "What is the employee's full name?",
-            validate: nameInput => {
-                if (nameInput) {
-                    return true;
-                } else {
-                    console.log("Please enter the employee's name.");
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: "What is the employee's ID?"
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: "What is the employee's email address?"
-        },
         {
             type: 'list',
             name: 'role',
-            message: "What is the employee's role?",
-            choices: ['Manager', 'Engineer', 'Intern', 'Employee']
+            message: "What type of employee would you like to add?",
+            choices: ['Manager', 'Engineer', 'Intern']
         }
     ]);
 }
 
-function promptManager() {
-    return inquirer.prompt ([
+const promptManager = () => {
+    if (!managerArr.managers) {
+        managerArr.managers = [];
+    };
+
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the manager's name?",
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the manager's ID?"
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the manager's email address?"
+        },
         {
             type: 'input',
             name: 'phone',
-            message: 'What is the phone number?'
+            message: "What is the manager's phone number?"
         }
     ])
+    .then(managerInfo => {
+        this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
+        managerArr.managers.push(this.manager);
+        console.log(managerArr.managers);
+    });
 }
 
 function createFile(content) {
@@ -76,18 +64,30 @@ function copyCssFile() {
     })
 }
 
+// function generateSite() {
+//     promptUser()
+//         .then(answers => {
+//             console.log(answers);
+//             return generateHtml(answers);
+//         })
+//         .then(html => {
+//             createFile(html);
+//             copyCssFile();
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         })
+// }
+
 function generateSite() {
-    promptUser()
-        .then(answers => {
-            console.log(answers);
-            return generateHtml(answers);
-        })
-        .then(html => {
-            createFile(html);
-            copyCssFile();
-        })
-        .catch(err => {
-            console.log(err);
+    promptRole()
+        .then(role => {
+            console.log(role);
+            if (role === 'Manager') {
+                promptManager(manager => {
+                    console.log(manager);
+                })
+            }
         })
 }
 
