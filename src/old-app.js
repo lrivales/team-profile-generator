@@ -49,6 +49,7 @@ const promptManager = (managerArr) => {
         .then(managerInfo => {
             this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
             managerHtml = generateHtml(this.manager, 'Manager', this.manager.phone);
+            // console.log(managerHtml);
             managerArr.push(managerHtml);
             return managerArr;
         });
@@ -168,11 +169,10 @@ function copyCssFile() {
 // }
   
 const buildTeamPage = employees => {
-    console.log(" Employees: " + employees)
-    team = employees.join().toString();
-    console.log("Team: " + team)
-    page = generatePage(team)
-    console.log("Page: " + page);
+    console.log("Employees: " + employees)
+    team = employees.join
+    page = generatePage(employees)
+    console.log("HTML: " + page);
 }
 
 function buildTeam(employeeArr) {

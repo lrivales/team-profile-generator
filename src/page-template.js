@@ -1,82 +1,73 @@
-function generateHtml(data, role, ...info) {
-    return `
-         <div class="card">
-            <div class="card-header">
-                <div class="card-title h5">${data.name}</div>
-                <div class="card-subtitle text-gray">${role}</div>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Email</th>
-                            ${roleHtml(role)}
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="active">
-                            <td>${data.id}</td>
-                            <td>${data.email}</td>
-                            <td>${info}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>  
-    `
-}
+const generateHTML = (team) => {
+   
+// map through and if they have a constructor name of manager then return html
+    let cards = team.map((employee) => {
+        if (employee.constructor.name === "Manager") {
+            return `<div class="card col-4" >
+                        <h3>${employee.name}</h3>
+                        <h4>Manager <i class="fas fa-mug-hot"></i> </h4>
+                        <ul>
+                            <li>ID: ${employee.id}</li>
+                            <li>Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
+                            <li>Office Number: ${employee.officeNumber}</li>
+                        </ul>
+                    </div>`
+        }
+    // map through and if they have a constructor name of engineer then return html
+        else if (employee.constructor.name === "Engineer") {
+            return `<div class="card col-4">
+                        <h3>${employee.name}</h3>
+                        <h4>Engineer <i class="fas fa-glasses"></i> </h4>
+                        <ul>
+                            <li>ID: ${employee.id}</li>
+                            <li>Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
+                            <li>GitHub: <a href="https://github.com/${employee.github}" target="_blank">${employee.github}</a></li>
+                        </ul>
+                    </div>`
+        }
+    // map through and if they have a constructor name of intern then return html
+        else if (employee.constructor.name === "Intern") {
+            return `<div class="card col-4">
+                        <h3>${employee.name}</h3>
+                        <h4>Intern <i class="fas fa-user-graduate"></i> </h4>
+                        <ul>
+                            <li>ID: ${employee.id}</li>
+                            <li>Email: <a href="mailto:${employee.email}">${employee.email}</a></li>
+                            <li>School: ${employee.school}</li>
+                        </ul>
+                    </div>`
+        }
+    })
 
-function roleHtml(role) {
-    switch (role) {
-        case  'Manager':
-            return `
-                <th>Phone</th>
-            `
-        case 'Engineer':
-            return `
-                <th>GitHub</th>
-            `
-        default:
-            return `
-                <th>School</th>
-            `
-        
-    }
-}
-
-function generatePage(html) {
-    return `
-    <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="spectre.min.css">
-            <title>My Team</title>
-        </head>
-
-        <body>
-            <div class="hero bg-gray">
-                <div class="hero-body">
-                    <h1>My Team</h1>
-                </div>
-            </div>
-
+    // create HTML output to pass back to return
+    const html = `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+        <link rel="stylesheet" href="./styles.css"> 
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <div class="columns">
-                    <div class="column">
-                        ${html}
-                    </div>
-                </div>
+                <h1 class="display-4">My Team</h1>
             </div>
-        </body>
+        </div>
+        <div class="container">
+            <div class="row">
+                ${cards.join('')}
+            </div>
+        </div>
+    </body>`
 
-        </html>
-    `
+    return html;
 }
 
-module.exports = generateHtml, generatePage;
+module.exports = generateHTML;
+
