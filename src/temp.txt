@@ -1,27 +1,16 @@
-function createTeam() {
-    inquirer
-      .prompt([
-        {
-          type: 'list',
-          name: 'memberChoice',
-          message: 'Which type of team member would you like to add?',
-          choices: [
-            'Engineer',
-            'Intern',
-            "I don't want to add any more team members",
-          ],
-        },
-      ])
-      .then((userChoice) => {
-        switch (userChoice.memberChoice) {
-          case 'Engineer':
-            addEngineer();
-            break;
-          case 'Intern':
-            addIntern();
-            break;
-          default:
-            buildTeam();
-        }
-      });
-  }
+[
+  [ Manager { name: 'ab', id: 'ab', email: 'ab', phone: 'ab' } ],
+  [ Engineer { name: 'fa', id: 'fa', email: 'fa', github: 'fa' } ],
+  [ Engineer { name: 'rt', id: 'rt', email: 'rt', github: 'rt' } ],
+  [ Intern { name: 'qw', id: 'qw', email: 'qw', school: 'qw' } ]
+]
+
+const array1 = [1, 4, 9, 16];
+
+// pass a function to map
+const map1 = array1.map(x => x * 2);
+
+console.log(map1);
+// expected output: Array [2, 8, 18, 32]
+
+const employees = data.map()

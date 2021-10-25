@@ -4,7 +4,6 @@ const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 const Manager = require('../lib/Manager');
 const generateHtml = require('./page-template');
-const Employee = require('../lib/Employee');
 
 const promptRole = () => {
     return inquirer
@@ -164,6 +163,12 @@ function copyCssFile() {
 //         })
 // }
   
+const buildTeamPage = employees => {
+    console.log(employees);
+    html = generateHtml(employees);
+    console.log(html);
+}
+
 function buildTeam(employeeArr) {
     if (!employeeArr) {
         employeeArr = [];
@@ -180,8 +185,7 @@ function buildTeam(employeeArr) {
                                 if (answer.confirmAddMore) {
                                     buildTeam(employeeArr);
                                 } else {
-                                    console.log(employeeArr);
-                                    return employeeArr;
+                                    buildTeamPage(employeeArr);
                                 }
                             });
                     })
@@ -195,8 +199,7 @@ function buildTeam(employeeArr) {
                                 if (answer.confirmAddMore) {
                                     buildTeam(employeeArr);
                                 } else {
-                                    console.log(employeeArr);
-                                    return employeeArr;
+                                    buildTeamPage(employeeArr);
                                 }
                             });
                     });
@@ -210,26 +213,12 @@ function buildTeam(employeeArr) {
                                 if (answer.confirmAddMore) {
                                     buildTeam(employeeArr);
                                 } else {
-                                    console.log(employeeArr);
-                                    return employeeArr
+                                    buildTeamPage(employeeArr);
                                 }
                             });
                     });
             }
-        });
-
-
-        // .then(employeeArr => {
-        //     promptAddMore()
-        //         .then(choice => {
-        //             if (choice.confirmAddMore) {
-        //                 buildTeam()
-        //             } else {
-        //                 console.log(employeeArr);
-        //                 return employeeArr;
-        //             }
-        //         });
-        // });
+        })
 }
 
 module.exports = buildTeam;

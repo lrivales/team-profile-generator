@@ -1,3 +1,3 @@
-const generateSite = require('./src/app');
+const buildTeam = require('./src/app');
 
-new generateSite();
+buildTeam();
