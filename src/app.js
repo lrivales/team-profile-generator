@@ -4,16 +4,18 @@ const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 const Manager = require('../lib/Manager');
 const generateHtml = require('./page-template');
+const Employee = require('../lib/Employee');
 
 const promptRole = () => {
-    return inquirer.prompt([
-        {
-            type: 'list',
-            name: 'role',
-            message: "What type of employee would you like to add?",
-            choices: ['Manager', 'Engineer', 'Intern']
-        }
-    ])
+    return inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'role',
+                message: "What type of employee would you like to add?",
+                choices: ['Manager', 'Engineer', 'Intern']
+            }
+        ]);
 }
 
 const promptManager = (managerArr) => {
@@ -21,33 +23,34 @@ const promptManager = (managerArr) => {
         managerArr = [];
     };
 
-    return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'name',
-            message: "What is the manager's name?",
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: "What is the manager's employee ID?"
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: "What is the manager's email address?"
-        },
-        {
-            type: 'input',
-            name: 'phone',
-            message: "What is the manager's phone number?"
-        }
-    ])
-    .then(managerInfo => {
-        this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
-        managerArr.push(this.manager);
-        console.log(this.manager);
-    })
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: "What is the manager's name?",
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: "What is the manager's employee ID?"
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: "What is the manager's email address?"
+            },
+            {
+                type: 'input',
+                name: 'phone',
+                message: "What is the manager's phone number?"
+            }
+        ])
+        .then(managerInfo => {
+            this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
+            managerArr.push(this.manager);
+            return managerArr;
+        });
 }
 
 const promptEngineer = engineerArr => {
@@ -55,7 +58,8 @@ const promptEngineer = engineerArr => {
         engineerArr = [];
     };
 
-    return inquirer.prompt([
+    return inquirer
+    .prompt([
         {
             type: 'input',
             name: 'name',
@@ -80,8 +84,8 @@ const promptEngineer = engineerArr => {
     .then(engineerInfo => {
         this.engineer = new Engineer(engineerInfo.name, engineerInfo.id, engineerInfo.email, engineerInfo.github)
         engineerArr.push(this.engineer);
-        console.log(this.engineer);
-    })
+        return engineerArr;
+    });
 }
 
 const promptIntern = internArr => {
@@ -89,7 +93,8 @@ const promptIntern = internArr => {
         internArr = [];
     };
 
-    return inquirer.prompt([
+    return inquirer
+    .prompt([
         {
             type: 'input',
             name: 'name',
@@ -114,36 +119,37 @@ const promptIntern = internArr => {
     .then(internInfo => {
         this.intern = new Intern(internInfo.name, internInfo.id, internInfo.email, internInfo.school)
         internArr.push(this.intern);
-        console.log(this.intern);
-    })
+        return internArr;
+    });
 }
 
 const promptAddMore = () => {
-    return inquirer.prompt([
+    return inquirer
+    .prompt([
         {
             type: 'confirm',
             name: 'confirmAddMore',
             message: 'Would you like to enter another employee?',
             default: 'false'
         }
-    ])
+    ]);
 }
 
 function createFile(content) {
     fs.writeFile('./dist/index.html', content, (err) => {
         if (err) throw err;
         console.log('File created!')
-    })
+    });
 }
 
 function copyCssFile() {
     fs.copyFile('./node_modules/spectre.css/dist/spectre.min.css', './dist/spectre.min.css', (err) => {
         if (err) throw err;
         console.log('CSS file copied.')
-    })
+    });
 }
 
-// function generateSite() {
+// function buildTeam() {
 //     promptUser()
 //         .then(answers => {
 //             console.log(answers);
@@ -157,20 +163,45 @@ function copyCssFile() {
 //             console.log(err);
 //         })
 // }
+  
+function buildTeam() {
+    employeeArr = [];
 
-function generateSite() {
     promptRole()
         .then(answer => {
             if (answer.role === 'Manager') {
                 promptManager()
+                    .then(manager => {
+                        employeeArr.push(manager);
+                        console.log(employeeArr);
+                    })
             } 
             else if (answer.role === 'Engineer') {
                 promptEngineer()
+                    .then(engineer => {
+                        employeeArr.push(engineer)
+                        console.log(employeeArr);
+                    })
             }
             else if (answer.role === 'Intern') {
                 promptIntern()
+                    .then(intern => {
+                        employeeArr.push(intern);
+                        console.log(employeeArr);
+                    })
             }
         })
+        .then(employeeArr => {
+            promptAddMore()
+                .then(choice => {
+                    if (choice.confirmAddMore) {
+                        buildTeam()
+                    } else {
+                        console.log(employeeArr);
+                        return employeeArr;
+                    }
+                });
+        });
 }
 
-module.exports = generateSite;
+module.exports = buildTeam;
