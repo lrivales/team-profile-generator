@@ -165,43 +165,70 @@ function copyCssFile() {
 // }
   
 function buildTeam() {
-    employeeArr = [];
+    managerArr = [];
+    engineerArr = [];
+    internArr = [];
 
     promptRole()
         .then(answer => {
             if (answer.role === 'Manager') {
                 promptManager()
                     .then(manager => {
-                        employeeArr.push(manager);
-                        console.log(employeeArr);
-                    })
+                        managerArr.push(manager);
+                        promptAddMore()
+                            .then(answer => {
+                                if (answer.confirmAddMore) {
+                                    buildTeam();
+                                } else {
+                                    console.log(managerArr);
+                                    return managerArr;
+                                }
+                            });
+                    });
             } 
             else if (answer.role === 'Engineer') {
                 promptEngineer()
                     .then(engineer => {
-                        employeeArr.push(engineer)
-                        console.log(employeeArr);
-                    })
+                        engineerArr.push(engineer)
+                        promptAddMore()
+                            .then(answer => {
+                                if (answer.confirmAddMore) {
+                                    buildTeam();
+                                } else {
+                                    console.log(engineerArr);
+                                    return engineerArr;
+                                }
+                            });
+                    });
             }
             else if (answer.role === 'Intern') {
                 promptIntern()
                     .then(intern => {
-                        employeeArr.push(intern);
-                        console.log(employeeArr);
-                    })
+                        internArr.push(intern);
+                        promptAddMore()
+                            .then(answer => {
+                                if (answer.confirmAddMore) {
+                                    buildTeam();
+                                } else {
+                                    console.log(internArr);
+                                    return internArr;
+                                }
+                            });
+                    });
             }
-        })
-        .then(employeeArr => {
-            promptAddMore()
-                .then(choice => {
-                    if (choice.confirmAddMore) {
-                        buildTeam()
-                    } else {
-                        console.log(employeeArr);
-                        return employeeArr;
-                    }
-                });
         });
+
+        // .then(employeeArr => {
+        //     promptAddMore()
+        //         .then(choice => {
+        //             if (choice.confirmAddMore) {
+        //                 buildTeam()
+        //             } else {
+        //                 console.log(employeeArr);
+        //                 return employeeArr;
+        //             }
+        //         });
+        // });
 }
 
 module.exports = buildTeam;
