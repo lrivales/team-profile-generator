@@ -180,7 +180,7 @@ function buildTeam(employeeArr) {
                                 if (answer.confirmAddMore) {
                                     buildTeam(employeeArr);
                                 } else {
-                                    console.log(managerArr);
+                                    console.log(employeeArr);
                                     return employeeArr;
                                 }
                             });
@@ -195,7 +195,7 @@ function buildTeam(employeeArr) {
                                 if (answer.confirmAddMore) {
                                     buildTeam(employeeArr);
                                 } else {
-                                    console.log(engineerArr);
+                                    console.log(employeeArr);
                                     return employeeArr;
                                 }
                             });
@@ -210,7 +210,7 @@ function buildTeam(employeeArr) {
                                 if (answer.confirmAddMore) {
                                     buildTeam(employeeArr);
                                 } else {
-                                    console.log(internArr);
+                                    console.log(employeeArr);
                                     return employeeArr
                                 }
                             });
