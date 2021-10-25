@@ -1,16 +1,18 @@
-[
-  [ Manager { name: 'ab', id: 'ab', email: 'ab', phone: 'ab' } ],
-  [ Engineer { name: 'fa', id: 'fa', email: 'fa', github: 'fa' } ],
-  [ Engineer { name: 'rt', id: 'rt', email: 'rt', github: 'rt' } ],
-  [ Intern { name: 'qw', id: 'qw', email: 'qw', school: 'qw' } ]
-]
+inquire>create object>create html> send to array
+in the end you gonna get the whole array of strings and do a .join(' ') (edited) 
 
-const array1 = [1, 4, 9, 16];
+        .then(managerInfo => {
+            this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
+            managerHtml = generateHtml(this.manager, 'Manager', this.manager.phone);
+            console.log(managerHtml);
+            managerArr.push(managerHtml);
+            return managerArr;
+        });
 
-// pass a function to map
-const map1 = array1.map(x => x * 2);
+function generateHtml(data) {
+    return `
+        
+    `
+}
 
-console.log(map1);
-// expected output: Array [2, 8, 18, 32]
-
-const employees = data.map()
+module.exports = generateHtml;

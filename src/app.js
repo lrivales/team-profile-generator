@@ -4,6 +4,7 @@ const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 const Manager = require('../lib/Manager');
 const generateHtml = require('./page-template');
+const generatePage = require('./page-template')
 
 const promptRole = () => {
     return inquirer
@@ -47,7 +48,8 @@ const promptManager = (managerArr) => {
         ])
         .then(managerInfo => {
             this.manager = new Manager(managerInfo.name, managerInfo.id, managerInfo.email, managerInfo.phone)
-            managerArr.push(this.manager);
+            managerHtml = generateHtml(this.manager, 'Manager', this.manager.phone);
+            managerArr.push(managerHtml);
             return managerArr;
         });
 }
@@ -82,7 +84,8 @@ const promptEngineer = engineerArr => {
     ])
     .then(engineerInfo => {
         this.engineer = new Engineer(engineerInfo.name, engineerInfo.id, engineerInfo.email, engineerInfo.github)
-        engineerArr.push(this.engineer);
+        engineerHtml = generateHtml(this.engineer, 'Engineer', this.engineer.github)
+        engineerArr.push(engineerHtml);
         return engineerArr;
     });
 }
@@ -117,7 +120,8 @@ const promptIntern = internArr => {
     ])
     .then(internInfo => {
         this.intern = new Intern(internInfo.name, internInfo.id, internInfo.email, internInfo.school)
-        internArr.push(this.intern);
+        internHtml = generateHtml(this.intern, 'Intern', this.intern.school)
+        internArr.push(internHtml);
         return internArr;
     });
 }
@@ -164,9 +168,11 @@ function copyCssFile() {
 // }
   
 const buildTeamPage = employees => {
-    console.log(employees);
-    html = generateHtml(employees);
-    console.log(html);
+    console.log(" Employees: " + employees)
+    team = employees.join();
+    console.log("Team: " + team)
+    page = generatePage(team)
+    console.log("HTML: " + page);
 }
 
 function buildTeam(employeeArr) {
