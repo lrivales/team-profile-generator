@@ -164,17 +164,9 @@ function copyCssFile() {
 //         })
 // }
   
-function buildTeam(managerArr, engineerArr, internArr) {
-    if (!managerArr) {
-        managerArr = [];
-    }
-
-    if (!engineerArr) {
-        engineerArr = [];
-    }
-    
-    if (!internArr) {
-        internArr = [];
+function buildTeam(employeeArr) {
+    if (!employeeArr) {
+        employeeArr = [];
     }
 
     promptRole()
@@ -182,15 +174,14 @@ function buildTeam(managerArr, engineerArr, internArr) {
             if (answer.role === 'Manager') {
                 promptManager()
                     .then(manager => {
-                        managerArr.push(manager);
+                        employeeArr.push(manager);
                         promptAddMore()
                             .then(answer => {
                                 if (answer.confirmAddMore) {
-                                    buildTeam();
+                                    buildTeam(employeeArr);
                                 } else {
-                                    // console.log(managerArr);
-                                    // return managerArr;
-                                    return;
+                                    console.log(managerArr);
+                                    return employeeArr;
                                 }
                             });
                     })
@@ -198,15 +189,14 @@ function buildTeam(managerArr, engineerArr, internArr) {
             else if (answer.role === 'Engineer') {
                 promptEngineer()
                     .then(engineer => {
-                        engineerArr.push(engineer)
+                        employeeArr.push(engineer)
                         promptAddMore()
                             .then(answer => {
                                 if (answer.confirmAddMore) {
-                                    buildTeam();
+                                    buildTeam(employeeArr);
                                 } else {
-                                    // console.log(engineerArr);
-                                    // return engineerArr;
-                                    return;
+                                    console.log(engineerArr);
+                                    return employeeArr;
                                 }
                             });
                     });
@@ -214,20 +204,20 @@ function buildTeam(managerArr, engineerArr, internArr) {
             else if (answer.role === 'Intern') {
                 promptIntern()
                     .then(intern => {
-                        internArr.push(intern);
+                        employeeArr.push(intern);
                         promptAddMore()
                             .then(answer => {
                                 if (answer.confirmAddMore) {
-                                    buildTeam();
+                                    buildTeam(employeeArr);
                                 } else {
-                                    // console.log(internArr);
-                                    // return internArr;
-                                    return;
+                                    console.log(internArr);
+                                    return employeeArr
                                 }
                             });
                     });
             }
         });
+
 
         // .then(employeeArr => {
         //     promptAddMore()
