@@ -11,6 +11,8 @@ function generateHtml(data, role, ...info) {
                         <tr>
                             <th>ID</th>
                             <th>Email</th>
+                            ${roleHtml(role)}
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +26,24 @@ function generateHtml(data, role, ...info) {
             </div>
         </div>  
     `
+}
+
+function roleHtml(role) {
+    switch (role) {
+        case  'Manager':
+            return `
+                <th>Phone</th>
+            `
+        case 'Engineer':
+            return `
+                <th>GitHub</th>
+            `
+        default:
+            return `
+                <th>School</th>
+            `
+        
+    }
 }
 
 function generatePage(html) {

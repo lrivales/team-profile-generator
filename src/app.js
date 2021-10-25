@@ -169,10 +169,10 @@ function copyCssFile() {
   
 const buildTeamPage = employees => {
     console.log(" Employees: " + employees)
-    team = employees.join();
+    team = employees.join().toString();
     console.log("Team: " + team)
     page = generatePage(team)
-    console.log("HTML: " + page);
+    console.log("Page: " + page);
 }
 
 function buildTeam(employeeArr) {
