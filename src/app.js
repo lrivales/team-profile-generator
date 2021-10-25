@@ -164,10 +164,18 @@ function copyCssFile() {
 //         })
 // }
   
-function buildTeam() {
-    managerArr = [];
-    engineerArr = [];
-    internArr = [];
+function buildTeam(managerArr, engineerArr, internArr) {
+    if (!managerArr) {
+        managerArr = [];
+    }
+
+    if (!engineerArr) {
+        engineerArr = [];
+    }
+    
+    if (!internArr) {
+        internArr = [];
+    }
 
     promptRole()
         .then(answer => {
@@ -180,11 +188,12 @@ function buildTeam() {
                                 if (answer.confirmAddMore) {
                                     buildTeam();
                                 } else {
-                                    console.log(managerArr);
-                                    return managerArr;
+                                    // console.log(managerArr);
+                                    // return managerArr;
+                                    return;
                                 }
                             });
-                    });
+                    })
             } 
             else if (answer.role === 'Engineer') {
                 promptEngineer()
@@ -195,8 +204,9 @@ function buildTeam() {
                                 if (answer.confirmAddMore) {
                                     buildTeam();
                                 } else {
-                                    console.log(engineerArr);
-                                    return engineerArr;
+                                    // console.log(engineerArr);
+                                    // return engineerArr;
+                                    return;
                                 }
                             });
                     });
@@ -210,8 +220,9 @@ function buildTeam() {
                                 if (answer.confirmAddMore) {
                                     buildTeam();
                                 } else {
-                                    console.log(internArr);
-                                    return internArr;
+                                    // console.log(internArr);
+                                    // return internArr;
+                                    return;
                                 }
                             });
                     });
